@@ -17,4 +17,9 @@ windowOnTrigger(freq, trigger) = countdownOnTrigger(freq, trigger) > 0;
 // changes from 0 to 1. 
 rampOnTrigger(freq, trigger) = _*((trigger-trigger') < 1) + (ma.T*freq) ~ _;
 
-process = gate : windowOnTrigger(1);
+// Generates 0 to 1 ramp when trigger signal changes from 0 to 1.
+// Ramp occurs over 1/freq seconds. Outputs 0 when not ramping.
+oneCyclePhasor(freq, trigger) = rampOnTrigger(freq, trigger)
+                                * windowOnTrigger(freq, trigger);
+
+process = gate : oneCyclePhasor(1);
