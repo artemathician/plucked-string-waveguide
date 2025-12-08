@@ -5,8 +5,11 @@ import("stdfaust.lib");
 gate = button("gate");
 
 // 0->1 trigger starts countdown from n to 0, lasting for 1/freq seconds.
-countdownOnTrigger(freq, trigger) = select2((trigger-trigger') < 1, 
-                                            ma.SR/freq, max(0, _-1)) ~ _;
+countdownOnTrigger(freq, trigger) = max(0, decrementer) ~ _
+with {
+    decrementer = _ + ma.SR/freq * ((trigger-trigger') > 0) 
+                  - 1 * ((trigger-trigger') < 1);
+};
 
 // 0->1 trigger starts rectangular window, lasting for 1/freq seconds.
 windowOnTrigger(freq, trigger) = countdownOnTrigger(freq, trigger) > 0;
@@ -22,4 +25,4 @@ oneCyclePhasor(freq, trigger) = rampOnTrigger(freq, trigger)
 // 0->1 trigger generates n (float) periods of a sine wave. Otherwise outputs 0.
 nCycleSine(n, freq, trigger) = 2*n*ma.PI*oneCyclePhasor(freq, trigger) : sin;
 
-process = gate : oneCyclePhasor(1);
+process = gate : countdownOnTrigger(1);
