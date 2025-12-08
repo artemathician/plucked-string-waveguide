@@ -7,8 +7,8 @@ gate = button("gate");
 // 0->1 trigger starts countdown from n to 0, lasting for 1/freq seconds.
 countdownOnTrigger(freq, trigger) = max(0, decrementer) ~ _
 with {
-    decrementer = _ + ma.SR/freq * ((trigger-trigger') > 0) 
-                  - 1 * ((trigger-trigger') < 1);
+    decrementer = _ + ma.SR/freq*((trigger-trigger') > 0) 
+                  - 1*((trigger-trigger') < 1);
 };
 
 // 0->1 trigger starts rectangular window, lasting for 1/freq seconds.
