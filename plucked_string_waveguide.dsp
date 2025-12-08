@@ -9,4 +9,8 @@ gate = button("gate");
 countdownOnTrigger(freq, trigger) = select2((trigger-trigger') < 1, 
                                             ma.SR/freq, max(0, _-1)) ~ _;
 
-process = gate : countdownOnTrigger(1);
+// Rectangular window initiated when trigger signal changes from 0 to 1,
+// and lasts for 1/freq seconds.
+windowOnTrigger(freq, trigger) = countdownOnTrigger(freq, trigger) > 0;
+
+process = gate : windowOnTrigger(1);
