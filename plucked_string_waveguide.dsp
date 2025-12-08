@@ -20,7 +20,7 @@ rampOnTrigger(freq, trigger) = _*((trigger-trigger') < 1) + (ma.T*freq) ~ _;
 // 0->1 trigger starts 0 to 1 ramp that lasts 1/freq seconds. 
 // Otherwise outputs 0. 
 oneCyclePhasor(freq, trigger) = rampOnTrigger(freq, trigger)
-                                * windowOnTrigger(freq, trigger);
+                                *windowOnTrigger(freq, trigger);
 
 // 0->1 trigger generates n (float) periods of a sine wave. Otherwise outputs 0.
 nCycleSine(n, freq, trigger) = 2*n*ma.PI*oneCyclePhasor(freq, trigger) : sin;
