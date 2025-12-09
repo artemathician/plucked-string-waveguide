@@ -31,4 +31,9 @@ oneCyclePhasor(freq, trigger) = rampOnTrigger(freq, trigger)
 // 0->1 trigger generates n (float) periods of a sine wave. Otherwise outputs 0.
 nCycleSine(n, freq, trigger) = 2*n*ma.PI*oneCyclePhasor(freq, trigger) : sin;
 
+pluck = gate : ba.impulsify : nCycleSine(1/2,freq.vert) *(g + (1 - g)*gain)
+with {
+    g = hslider("[hidden:1]Minimum Gain",0.5,0,1,0.01);
+};
+
 process = gate : countdownOnTrigger(1);
