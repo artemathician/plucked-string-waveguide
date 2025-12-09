@@ -88,6 +88,47 @@ length = environment {// Units = mm
 
 // ===========================================================================
 //
+// String Loss Filters
+//
+// ===========================================================================
+
+// Filters away losses from vertical string polarization
+lossFilterV = _ <: _*a, _ :> _*g : + ~(_*(-a))
+with {
+    c = (density.def * area.def)
+        *length.var.vert^2
+        *omega.vert^3
+        *ma.T^2
+        /(4*(ma.PI^3) * d3.def);
+
+    a = -1 + c + sqrt(c^2 - 2*c);
+
+    g = 1 - 
+        (ma.PI * d1.var
+        /(density.def * area.def)
+        /omega.vert);
+};
+
+// Filters away losses from horizontal string polarization
+lossFilterH = _ <: _*a, _ :> _*g : + ~(_*(-a))
+with {
+    c = (density.def * area.def)
+        *length.var.horiz^2
+        *omega.horiz^3
+        *ma.T^2
+        /(4*(ma.PI^3) * d3.def);
+
+    a = -1 + c + sqrt(c^2 - 2*c);
+
+    g = 1 - 
+        (ma.PI * d1.var
+        /(density.def * area.def)
+        /omega.horiz);
+};
+
+
+// ===========================================================================
+//
 // Pluck Functions
 //
 // ===========================================================================
