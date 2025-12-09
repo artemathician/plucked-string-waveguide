@@ -139,17 +139,19 @@ length = environment {// Units = mm
 
 // ===========================================================================
 //
-// Delay Functions for Digital Waveguides
+// Delay Line Functions for Digital Waveguides
 //
 // ===========================================================================
+
+delayLine(delay) = de.fdelay3(ma.SR/20,delay);
 
 delayVert = environment {
     length = ma.SR/freq.vert;
 
     // Length of string is split into two parts, where split location
     // corresponds to pluckPosition
-    one = delayFilter(length * (1-position));
-    two = delayFilter(length * position - 1);
+    one = delayLine(length * (1-pluckPosition));
+    two = delayLine(length * pluckPosition - 1);
 };
 
 delayHoriz = environment {
@@ -157,8 +159,8 @@ delayHoriz = environment {
 
     // Length of string is split into two parts, where split location
     // corresponds to pluckPosition
-    one = delayFilter(length * (1-position));
-    two = delayFilter(length * position - 1);
+    one = delayLine(length * (1-pluckPosition));
+    two = delayLine(length * pluckPosition - 1);
 };
 
 
