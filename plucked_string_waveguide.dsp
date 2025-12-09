@@ -75,7 +75,7 @@ length = environment {// Units = mm
     sm = 10;
     lg = 10*1000; // 10m
     def = 650;
-    p = environment {
+    var = environment {
         vert = sqrt(stringVars.tension.var
                     /(stringVars.density.de * stringVars.area.de))
                /(2*freq.vert);
