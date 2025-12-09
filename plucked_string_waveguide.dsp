@@ -38,7 +38,7 @@ with {
     g = hslider("[hidden:1]Minimum Gain",0.5,0,1,0.01);
 };
 
-// Makes pluckSmooth noisy, correlated directly with gain (i.e. velocity)
+// Makes input noisy, correlated directly with gain (i.e. key/pluck velocity)
 noisify = _ <: _*(1 - g*ph), _*noise*g*ph : +
 with {
     g = gain;
