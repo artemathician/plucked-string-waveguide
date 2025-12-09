@@ -4,6 +4,8 @@ import("stdfaust.lib");
 
 gate = button("gate");
 gain = hslider("gain", 0.5, 0, 1, 0.01);
+
+// Frequencies of vertical and horizontal polarization of string vibration.
 freq = environment {
     delta = -0.2;
     vert = hslider("freq", 247, 15, 8000, 0.01);
