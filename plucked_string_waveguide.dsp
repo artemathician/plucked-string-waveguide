@@ -170,7 +170,7 @@ delayHoriz = environment {
 // ===========================================================================
 
 // Filters away losses from vertical string polarization
-lossFilterV = _ <: _*a, _ :> _*g : + ~(_*(-a))
+lossFilterVert = _ <: _*a, _ :> _*g : + ~(_*(-a))
 with {
     c = (density.def * area.def)
         *length.var.vert^2
@@ -187,7 +187,7 @@ with {
 };
 
 // Filters away losses from horizontal string polarization
-lossFilterH = _ <: _*a, _ :> _*g : + ~(_*(-a))
+lossFilterHoriz = _ <: _*a, _ :> _*g : + ~(_*(-a))
 with {
     c = (density.def * area.def)
         *length.var.horiz^2
@@ -211,20 +211,52 @@ with {
 //
 // ===========================================================================
 
-waveguideVert(in) = ((in/2, (_*(-fb) : lossFilterV) : + : 
+waveguideVert(in) = ((in/2, (_*(-fb) : lossFilterVert) : + : 
                     delayVert.one), _)
                     ~ ((in/2,(_*(-fb)) : + : delayVert.two) <: _,_) : +
 with {
     fb = 1;
 };
 
-waveguideHoriz(in) = ((in/2, (_*(-fb) : lossFilterH) : + : 
+waveguideHoriz(in) = ((in/2, (_*(-fb) : lossFilterHoriz) : + : 
                     delayHoriz.one), _)
                     ~ ((in/2,(_*(-fb)) : + : delayHoriz.two) <: _,_) : +
 with {
     fb = 1;
 };
 
+
+
+// ===========================================================================
+//
+// String Using Two Waveguides for Double Polarization
+//
+// ===========================================================================
+
+// Vertical polarization receives feedback from horizontal polarization
+string = _ <: ((_ *mp) : waveguideHoriz <: _ *mo, (_ *gc)), _*(1 - mp) 
+        : _, (_ + _ : waveguideVert *(1 - mo)) : +
+with {
+    feedback = environment {
+        sm = 0;
+        lg = 0.75 + 0.25 *(d1.slider /0.25 : min(1));
+        range = lg-sm;
+        sliderGuitar = 0.85;//.85
+        fbScalerDef = .75;
+        fbScaler = 1;//.75
+        sliderDef = sliderGuitar*fbScalerDef/fbScaler;
+        slider = hslider("[5]String Feedback", sliderDef, 0, 1, 0.00001);
+        fb = (slider *range + sm) *fbScaler;
+    };
+
+    g = 1 - (1 *d1.def
+             /(density.def *area.def)
+             /(2 *freq.horiz));
+
+    mp = (1 - g^2) *feedback.fb; //hslider("Pluck Mix",0.01,0,1,0.01) : si.smoo;
+    gc = g^2 *feedback.fb; //hslider("Polarization Feedback",.025/2,0,0.025,0.00001) : si.smoo;
+    mo = mp; //hslider("Polarization Mix",0,0,1,0.01) : si.smoo;
+}; 
 
 
 finalGain = hslider("Output Gain", 0.5, 0, 1, 0.01) *60;
