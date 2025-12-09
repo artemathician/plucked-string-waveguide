@@ -76,12 +76,10 @@ length = environment {// Units = mm
     lg = 10*1000; // 10m
     def = 650;
     var = environment {
-        vert = sqrt(tension.var
-                    /(density.def * area.def))
+        vert = sqrt(tension.var / (density.def * area.def))
                /(2*freq.vert);
 
-        horiz = sqrt(tension.var
-                     /(density.def * area.def))
+        horiz = sqrt(tension.var / (density.def * area.def))
                 /(2*freq.horiz);
         };
 };
