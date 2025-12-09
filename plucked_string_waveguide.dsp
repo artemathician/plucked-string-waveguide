@@ -12,6 +12,11 @@ freq = environment {
     delta = -0.2;
 };
 
+omega = environment {
+    vert = 2 *ma.PI *freq.vert;
+    horiz = 2 *ma.PI *freq.horiz;
+};
+
 // 0->1 trigger starts countdown from n to 0, lasting for 1/freq seconds.
 countdownOnTrigger(freq, trigger) = max(0, decrementer) ~ _
 with {
