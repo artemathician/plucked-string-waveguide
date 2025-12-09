@@ -24,6 +24,72 @@ exponential(a,zeroToOne) = (a^(zeroToOne)-1)/(a-1);
 
 // ===========================================================================
 //
+// String Parameters and Variables
+//
+// ===========================================================================
+// For all parameters: sm = 'small', lg = 'large', def = 'default'. Default
+// values are provided by Trautmann et al. for a nylon B guitar string.
+
+area = environment {// Cross sectional area, units = mm^2
+    sm = 0.1;
+    lg = 2;
+    def = 0.5188;
+};
+
+density = environment {// Mass density, units = kg/(mm^3)
+    def = 1140*(10^(-9));
+};
+
+moment = environment {// Units = mm^4
+    def = 0.171;
+};
+
+modulus = environment {// Units = kg/(mm s^2)
+    def = 5.4*(10^6);
+};
+
+tension = environment {// Units = (kg mm)/(s^2)
+    sm = 15*(10^3);
+    lg = 10000*(10^3);
+    def = 60.97*(10^3);
+    range = lg-sm;
+    slider = hslider("[4]String Tension",0.5,0,1,0.0001) : exponential(125);
+    var = slider*range + sm;
+};
+
+d1 = environment {// Frequency INdependent damping, units = kg/(m s)
+    sm = 4*(10^(-7));
+    lg = 32*(10^(-6));
+    def = 8*(10^(-10));
+    range = lg-sm;
+    slider = hslider("[3]String Damping",0.15,0,1,0.0001) : exponential(125);
+    // Use (target-s)/r to calculate def slider value to target
+    var = slider*range + sm;
+    };
+
+d3 = environment {// Frequency DEpendent damping, units = (kg mm)/s
+    def = -6.4*(10^(-3));
+};
+
+length = environment {
+    sm = 10;
+    lg = 10*1000; // 10m
+    def = 650;
+    p = environment {
+        vert = sqrt(stringVars.tension.var
+                    /(stringVars.density.de * stringVars.area.de))
+               /(2*freq.vert);
+
+        horiz = sqrt(stringVars.tension.var
+                     /(stringVars.density.de * stringVars.area.de))
+                /(2*freq.horiz);
+        };
+};
+
+
+
+// ===========================================================================
+//
 // Pluck Functions
 //
 // ===========================================================================
