@@ -34,19 +34,19 @@ oneCyclePhasor(freq, trigger) = rampOnTrigger(freq, trigger)
 nCycleSine(n, freq, trigger) = 2*n*ma.PI*oneCyclePhasor(freq, trigger) : sin;
 
 // Half period sine wave pluck with a minimum gain of 0.5 and maximum gain of 1.
-pluckSmooth = gate : ba.impulsify : nCycleSine(1/2,freq.vert) :
+pluckSmooth = gate : ba.impulsify : nCycleSine(1/2, freq.vert) :
               *(g + (1 - g)*gain)
 with {
-    g = hslider("[hidden:1]Minimum Gain",0.5,0,1,0.01);
+    g = hslider("[hidden:1]Minimum Gain", 0.5, 0, 1, 0.01);
 };
 
 // Makes input noisy, correlated directly with gain (i.e. key/pluck velocity)
 noisify = _ <: _*(1 - g*ph), _*noise*g*ph : +
 with {
     g = gain;
-    ph = hslider("[1]Pluck Dynamics",0.75,0,1,0.01);
-    noise = (no.noise : fi.highpass(1,freq.vert) 
-        : fi.lowpass(1,freq.vert*100*ph : min(20000) 
+    ph = hslider("[1]Pluck Dynamics", 0.75, 0, 1, 0.01);
+    noise = (no.noise : fi.highpass(1, freq.vert) 
+        : fi.lowpass(1, freq.vert*100*ph : min(20000) 
         : max(freq.vert)))*0.5 + 1 : _/1.5;
 };
 
