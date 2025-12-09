@@ -3,6 +3,7 @@ declare author "Tarun Nalluri";
 import("stdfaust.lib");
 
 gate = button("gate");
+gain = hslider("gain", 0.5, 0, 1, 0.01);
 
 // 0->1 trigger starts countdown from n to 0, lasting for 1/freq seconds.
 countdownOnTrigger(freq, trigger) = max(0, decrementer) ~ _
