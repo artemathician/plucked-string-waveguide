@@ -20,6 +20,10 @@ omega = environment {
 // Maps a linear [0,1] signal to an exponential [0,1] signal
 exponential(a,zeroToOne) = (a^(zeroToOne)-1)/(a-1);
 
+// ---------------------------------------------------------------------------
+// Pluck Functions
+// ---------------------------------------------------------------------------
+
 // 0->1 trigger starts countdown from n to 0, lasting for 1/freq seconds.
 countdownOnTrigger(freq, trigger) = max(0, decrementer) ~ _
 with {
