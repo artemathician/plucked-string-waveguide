@@ -7,9 +7,9 @@ gain = hslider("gain", 0.5, 0, 1, 0.01);
 
 // Frequencies of vertical and horizontal polarization of string vibration.
 freq = environment {
-    delta = -0.2;
     vert = hslider("freq", 247, 15, 8000, 0.01);
     horiz = vert+delta;
+    delta = -0.2;
 };
 
 // 0->1 trigger starts countdown from n to 0, lasting for 1/freq seconds.
