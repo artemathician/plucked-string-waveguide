@@ -4,6 +4,11 @@ import("stdfaust.lib");
 
 gate = button("gate");
 gain = hslider("gain", 0.5, 0, 1, 0.01);
+freq = environment {
+    delta = -0.2;
+    vert = hslider("freq", 247, 15, 8000, 0.01);
+    horiz = vert+delta;
+};
 
 // 0->1 trigger starts countdown from n to 0, lasting for 1/freq seconds.
 countdownOnTrigger(freq, trigger) = max(0, decrementer) ~ _
