@@ -259,6 +259,13 @@ with {
 }; 
 
 
+
+// ===========================================================================
+//
+// Final Process and Output Gain Level
+//
+// ===========================================================================
+
 finalGain = hslider("Output Gain", 0.5, 0, 1, 0.01) *60;
 
-process = pluckNoisy : _*finalGain <: _,_;
+process = pluckNoisy : string : _*finalGain <: _,_;
