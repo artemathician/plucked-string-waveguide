@@ -8,7 +8,7 @@ gain = hslider("gain", 0.5, 0, 1, 0.01);
 // Frequencies of vertical and horizontal polarization of string vibration.
 freq = environment {
     vert = hslider("freq", 247, 15, 8000, 0.01);
-    horiz = vert+delta;
+    horiz = vert + delta;
     delta = -0.2;
 };
 
