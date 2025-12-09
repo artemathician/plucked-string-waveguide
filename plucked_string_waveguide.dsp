@@ -71,7 +71,7 @@ d3 = environment {// Frequency DEpendent damping, units = (kg mm)/s
     def = -6.4*(10^(-3));
 };
 
-length = environment {
+length = environment {// Units = mm
     sm = 10;
     lg = 10*1000; // 10m
     def = 650;
