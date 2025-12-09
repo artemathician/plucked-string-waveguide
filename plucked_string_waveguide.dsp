@@ -38,4 +38,14 @@ with {
     g = hslider("[hidden:1]Minimum Gain",0.5,0,1,0.01);
 };
 
+// Makes pluckSmooth noisy
+noisify = _ <: _*(1 - g*ph), _*noise*g*ph : +
+with {
+    g = gain;
+    ph = hslider("[1]Pluck Dynamics",0.75,0,1,0.01);
+    noise = (no.noise : fi.highpass(1,freq.vert) 
+        : fi.lowpass(1,freq.vert*100*ph : min(20000) 
+        : max(freq.vert)))*0.5 + 1 : _/1.5;
+};
+
 process = pluckSmooth;
