@@ -143,7 +143,7 @@ length = environment {// Units = mm
 //
 // ===========================================================================
 
-delayLine(delay) = de.fdelay3(ma.SR/20,delay);
+delayLine(length) = de.fdelay3(ma.SR/20,length);
 
 delayVert = environment {
     length = ma.SR/freq.vert;
