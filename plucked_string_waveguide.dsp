@@ -48,4 +48,7 @@ with {
         : max(freq.vert)))*0.5 + 1 : _/1.5;
 };
 
-process = pluckSmooth;
+pluckNoisy = pluckSmooth : noisify *(1/60);
+finalGain = hslider("Output Gain", 0.5, 0, 1, 0.01) *60;
+
+process = pluckNoisy : _*finalGain;
