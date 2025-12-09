@@ -182,10 +182,9 @@ with {
 
     a = -1 + c + sqrt(c^2 - 2*c);
 
-    g = 1 - 
-        (ma.PI * d1.var
-        /(density.def * area.def)
-        /omega.vert);
+    g = 1 - (ma.PI * d1.var
+             /(density.def * area.def)
+             /omega.vert);
 };
 
 // Filters away losses from horizontal string polarization
@@ -199,10 +198,9 @@ with {
 
     a = -1 + c + sqrt(c^2 - 2*c);
 
-    g = 1 - 
-        (ma.PI * d1.var
-        /(density.def * area.def)
-        /omega.horiz);
+    g = 1 - (ma.PI * d1.var
+             /(density.def * area.def)
+             /omega.horiz);
 };
 
 
@@ -214,15 +212,15 @@ with {
 // ===========================================================================
 
 waveguideVert(in) = ((in/2, (_*(-fb) : lossFilterVert) : + : 
-                    delayVert.one), _)
+                     delayVert.one), _)
                     ~ ((in/2,(_*(-fb)) : + : delayVert.two) <: _,_) : +
 with {
     fb = 1;
 };
 
 waveguideHoriz(in) = ((in/2, (_*(-fb) : lossFilterHoriz) : + : 
-                    delayHoriz.one), _)
-                    ~ ((in/2,(_*(-fb)) : + : delayHoriz.two) <: _,_) : +
+                      delayHoriz.one), _)
+                     ~ ((in/2,(_*(-fb)) : + : delayHoriz.two) <: _,_) : +
 with {
     fb = 1;
 };
