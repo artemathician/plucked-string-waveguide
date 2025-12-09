@@ -253,9 +253,9 @@ with {
              /(density.def *area.def)
              /(2 *freq.horiz));
 
-    mp = (1 - g^2) *feedback.fb; //hslider("Pluck Mix",0.01,0,1,0.01) : si.smoo;
-    gc = g^2 *feedback.fb; //hslider("Polarization Feedback",.025/2,0,0.025,0.00001) : si.smoo;
-    mo = mp; //hslider("Polarization Mix",0,0,1,0.01) : si.smoo;
+    mp = (1 - g^2) *feedback.fb;
+    gc = g^2 *feedback.fb;
+    mo = mp;
 }; 
 
 
