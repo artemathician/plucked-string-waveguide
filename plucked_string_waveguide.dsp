@@ -205,6 +205,28 @@ with {
 
 
 
+// ===========================================================================
+//
+// Digital Waveguides for Two Planes of Vibration
+//
+// ===========================================================================
+
+waveguideVert(in) = ((in/2, (_*(-fb) : lossFilterV) : + : 
+                    delayVert.one), _)
+                    ~ ((in/2,(_*(-fb)) : + : delayVert.two) <: _,_) : +
+with {
+    fb = 1;
+};
+
+waveguideHoriz(in) = ((in/2, (_*(-fb) : lossFilterH) : + : 
+                    delayHoriz.one), _)
+                    ~ ((in/2,(_*(-fb)) : + : delayHoriz.two) <: _,_) : +
+with {
+    fb = 1;
+};
+
+
+
 finalGain = hslider("Output Gain", 0.5, 0, 1, 0.01) *60;
 
 process = pluckNoisy : _*finalGain <: _,_;
