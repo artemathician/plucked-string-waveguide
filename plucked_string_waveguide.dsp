@@ -69,7 +69,7 @@ with {
 // Pluck whose 'noisiness' correlates directly with gain (i.e. key velocity) 
 pluckNoisy = pluckSmooth : noisify *(1/60);
 
-position = hslider("[2]Pluck Position", 0.21, 0, 1, 0.01);
+pluckPosition = hslider("[2]Pluck Position", 0.21, 0, 1, 0.01);
 
 
 
@@ -133,6 +133,32 @@ length = environment {// Units = mm
         horiz = sqrt(tension.var / (density.def * area.def))
                 /(2*freq.horiz);
         };
+};
+
+
+
+// ===========================================================================
+//
+// Delay Functions for Digital Waveguides
+//
+// ===========================================================================
+
+delayVert = environment {
+    length = ma.SR/freq.vert;
+
+    // Length of string is split into two parts, where split location
+    // corresponds to pluckPosition
+    one = delayFilter(length * (1-position));
+    two = delayFilter(length * position - 1);
+};
+
+delayHoriz = environment {
+    length = ma.SR/freq.horiz;
+
+    // Length of string is split into two parts, where split location
+    // corresponds to pluckPosition
+    one = delayFilter(length * (1-position));
+    two = delayFilter(length * position - 1);
 };
 
 
